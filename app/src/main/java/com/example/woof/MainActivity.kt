@@ -42,9 +42,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WoofApp() {
-    // استخدام MutableState للتحكم في الوضع (داكن أو فاتح)
-    var darkMode by remember { mutableStateOf(false) } // الفاتح بشكل افتراضي
-    var selectedDog by remember { mutableStateOf<Dog?>(null) } // لحفظ الكلب المختار
+    // Использование MutableState для управления темной и светлой темой
+    var darkMode by remember { mutableStateOf(false) } // Светлая тема по умолчанию
+    var selectedDog by remember { mutableStateOf<Dog?>(null) } // Для хранения выбранной собаки
 
     Scaffold(
         topBar = {
@@ -52,21 +52,21 @@ fun WoofApp() {
         }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
-            // زر أو تبديل لاختيار الوضع الفاتح أو الداكن
+            // Переключатель для выбора темной или светлой темы
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Dark Mode", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Темная тема", style = MaterialTheme.typography.bodyLarge)
                 Switch(
                     checked = darkMode,
                     onCheckedChange = { darkMode = it }
                 )
             }
 
-            // تطبيق الثيم بناءً على وضع الاختيار
+            // Применение темы в зависимости от выбора
             WoofTheme(darkTheme = darkMode) {
                 LazyColumn(contentPadding = paddingValues) {
                     items(dogs) { dog ->
@@ -78,10 +78,10 @@ fun WoofApp() {
                             }
                         )
 
-                        // عرض تفاصيل الكلب أسفل الكلب إذا تم اختياره
+                        // Отображение деталей собаки под собакой, если она выбрана
                         selectedDog?.let {
                             if (it == dog) {
-                                DogDetails(dog) // عرض تفاصيل الكلب أسفل الكلب
+                                DogDetails(dog) // Отображение деталей собаки под собакой
                             }
                         }
                     }
@@ -95,7 +95,7 @@ fun WoofApp() {
 fun DogItem(
     dog: Dog,
     modifier: Modifier = Modifier,
-    onDogClick: (Dog) -> Unit // دالة للضغط على الكلب
+    onDogClick: (Dog) -> Unit // Действие при нажатии на собаку
 ) {
     Card(
         modifier = modifier
@@ -104,7 +104,7 @@ fun DogItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.padding_small))
-                .clickable { onDogClick(dog) } // عند الضغط على الكلب، تنفيذ الدالة
+                .clickable { onDogClick(dog) } // При нажатии на собаку выполнить действие
         ) {
             DogIcon(dog.imageResourceId)
             DogInformation(dog.name, dog.age)
@@ -186,7 +186,7 @@ fun DogDetails(dog: Dog) {
             text = stringResource(dog.hobbies),
             style = MaterialTheme.typography.bodyLarge
         )
-        DogIcon(dog.imageResourceId) // عرض صورة الكلب
+        DogIcon(dog.imageResourceId) // Отображение изображения собаки
     }
 }
 
